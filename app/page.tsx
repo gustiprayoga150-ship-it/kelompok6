@@ -1,8 +1,12 @@
+
 import { Suspense } from "react";
 
 import Header from "./components/Header";
 import SensorCards from "./components/SensorCards";
 import SensorData from "./components/SensorData";
+import DeviceStatus from "./components/DeviceStatus";
+import SensorAlert from "./components/SensorAlert";
+import LastUpdated from "./components/LastUpdated";
 import Loading from "./components/Loading";
 
 export default function Home() {
@@ -11,6 +15,7 @@ export default function Home() {
       <Header />
 
       <div className="mx-auto max-w-7xl px-6 py-10">
+
         {/* HERO */}
         <section className="mb-10">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.3em] text-cyan-400">
@@ -42,10 +47,50 @@ export default function Home() {
           <SensorCards />
         </section>
 
-        {/* DYNAMIC DATA */}
+        {/* DEVICE STATUS */}
+        <section className="mt-8">
+          <Suspense
+            fallback={
+              <div className="animate-pulse rounded-2xl bg-white/10 p-8">
+                <div className="h-5 w-40 rounded bg-white/10" />
+              </div>
+            }
+          >
+            <DeviceStatus />
+          </Suspense>
+        </section>
+
+        {/* SENSOR DATA */}
         <section className="mt-8">
           <Suspense fallback={<Loading />}>
             <SensorData />
+          </Suspense>
+        </section>
+
+        {/* LAST UPDATED */}
+        <section className="mt-4">
+          <Suspense
+            fallback={
+              <p className="text-sm text-gray-500">
+                Memuat waktu pembaruan...
+              </p>
+            }
+          >
+            <LastUpdated />
+          </Suspense>
+        </section>
+
+        {/* SENSOR ALERT */}
+        <section className="mt-8">
+          <Suspense
+            fallback={
+              <div className="animate-pulse rounded-2xl bg-white/10 p-6">
+                <div className="h-5 w-48 rounded bg-white/10" />
+                <div className="mt-4 h-12 rounded-xl bg-white/10" />
+              </div>
+            }
+          >
+            <SensorAlert />
           </Suspense>
         </section>
 
@@ -58,12 +103,10 @@ export default function Home() {
           <div className="mt-5 space-y-4">
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-green-400" />
-
               <div>
                 <p className="text-sm text-gray-300">
                   Sensor berhasil terhubung
                 </p>
-
                 <p className="text-xs text-gray-600">
                   Baru saja
                 </p>
@@ -72,12 +115,10 @@ export default function Home() {
 
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-cyan-400" />
-
               <div>
                 <p className="text-sm text-gray-300">
                   Data sensor diperbarui
                 </p>
-
                 <p className="text-xs text-gray-600">
                   Beberapa saat yang lalu
                 </p>
@@ -86,12 +127,10 @@ export default function Home() {
 
             <div className="flex items-center gap-3">
               <span className="h-2 w-2 rounded-full bg-purple-400" />
-
               <div>
                 <p className="text-sm text-gray-300">
                   Sistem monitoring aktif
                 </p>
-
                 <p className="text-xs text-gray-600">
                   Hari ini
                 </p>
@@ -99,6 +138,7 @@ export default function Home() {
             </div>
           </div>
         </section>
+
       </div>
 
       {/* FOOTER */}
